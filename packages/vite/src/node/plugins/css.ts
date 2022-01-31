@@ -684,10 +684,12 @@ async function compileCSS(
   const postcssOptions = (postcssConfig && postcssConfig.options) || {}
   const postcssPlugins =
     postcssConfig && postcssConfig.plugins ? postcssConfig.plugins.slice() : []
+  const postcssImport = (postcssOptions && postcssOptions.import) || {}
 
   if (needInlineImport) {
     postcssPlugins.unshift(
       (await import('postcss-import')).default({
+        path: postcssImport.path,
         async resolve(id, basedir) {
           const resolved = await atImportResolvers.css(
             id,
@@ -701,6 +703,7 @@ async function compileCSS(
       })
     )
   }
+
   postcssPlugins.push(
     UrlRewritePostcssPlugin({
       replacer: urlReplacer

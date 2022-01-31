@@ -35,6 +35,7 @@ declare module 'postcss-load-config' {
   ): Promise<{
     options: ProcessOptions
     plugins: Plugin[]
+    import?: any
   }>
   export = load
 }
@@ -42,6 +43,7 @@ declare module 'postcss-load-config' {
 declare module 'postcss-import' {
   import type { Plugin } from 'postcss'
   const plugin: (options: {
+    path: string[]
     resolve: (
       id: string,
       basedir: string,
